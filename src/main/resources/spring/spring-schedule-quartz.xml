@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+    <!--jobs-->
+    <!--demo-->
+    <bean id="exampleJobJobDetailFactoryJobDetailFactoryBean"
+          class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.mtsmda.keygen.desktop.schedule.demo.ExampleJobJobDetailFactory"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="timeout" value="5"/>
+            </map>
+        </property>
+        <property name="durability" value="true"/>
+    </bean>
+
+    <!--<bean id="exampleJobMethodInvokingJob" class="com.mtsmda.keygen.desktop.schedule.demo.ExampleJobMethodInvokingJob"/>-->
+
+    <bean id="exampleJobMethodInvokingJobMethodInvokingJobDetailFactoryBean"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="exampleJobMethodInvokingJob"/>
+        <property name="targetMethod" value="doIt"/>
+    </bean>
+
+    <!--real-->
+    <bean id="executeJobAddUserRequestTempUrlAndPasswordMethodInvokingJobDetailFactoryBean"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="userRequestSchedule"/>
+        <property name="targetMethod" value="executeJobAddUserRequestTempUrlAndPassword"/>
+    </bean>
+
+    <bean id="sendEmailWithTempDataScheduleMethodInvokingJobDetailFactoryBean"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="sendEmailWithTempDataSchedule"/>
+        <property name="targetMethod" value="executeJobSendEmailWithTempData"/>
+    </bean>
+
+    <!--triggers-->
+    <!--demo-->
+    <bean id="exampleJobJobDetailFactoryJobDetailFactoryBeanCron"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="exampleJobJobDetailFactoryJobDetailFactoryBean"/>
+        <property name="cronExpression" value="0/10 * * * * ?"/>
+    </bean>
+
+    <bean id="exampleJobMethodInvokingJobMethodInvokingJobDetailFactoryBeanSimple"
+          class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="exampleJobMethodInvokingJobMethodInvokingJobDetailFactoryBean"/>
+        <property name="startDelay" value="5000"/>
+        <property name="repeatInterval" value="1000"/>
+    </bean>
+
+    <!--real-->
+    <bean id="executeJobAddUserRequestTempUrlAndPasswordMethodInvokingJobDetailFactoryBeanSimple"
+          class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="executeJobAddUserRequestTempUrlAndPasswordMethodInvokingJobDetailFactoryBean"/>
+        <property name="startDelay" value="5000"/>
+        <property name="repeatInterval" value="40000"/>
+    </bean>
+
+    <bean id="sendEmailWithTempDataScheduleMethodInvokingJobDetailFactoryBeanSimple"
+          class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="sendEmailWithTempDataScheduleMethodInvokingJobDetailFactoryBean"/>
+        <property name="startDelay" value="10000"/>
+        <property name="repeatInterval" value="45000"/>
+    </bean>
+
+    <!--run-->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!--real-->
+                <ref bean="executeJobAddUserRequestTempUrlAndPasswordMethodInvokingJobDetailFactoryBeanSimple"/>
+                <ref bean="sendEmailWithTempDataScheduleMethodInvokingJobDetailFactoryBeanSimple"/>
+                <!--demo-->
+                <!--<ref bean="exampleJobJobDetailFactoryJobDetailFactoryBeanCron"/>
+                <ref bean="exampleJobMethodInvokingJobMethodInvokingJobDetailFactoryBeanSimple"/>-->
+            </list>
+        </property>
+        <!--<property name="jobDetails">
+            <list>
+                <ref bean="exampleJobJobDetailFactoryJobDetailFactoryBean"/>
+                <ref bean="exampleJobMethodInvokingJobMethodInvokingJobDetailFactoryBean"/>
+            </list>
+        </property>-->
+    </bean>
+
+</beans>

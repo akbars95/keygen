@@ -1,0 +1,31 @@
+.menuP ul {
+    display: inline;
+    margin: 0 auto;
+    list-style: none;
+}
+
+.menuP ul li {
+    display: inline;
+    text-transform: uppercase;
+
+}
+
+.menuP ul li:hover {
+    color: green;
+    background: yellow;
+    font-weight: bold;
+}
+
+.error {
+    color: red;
+}
+
+.successOK {
+    display: inline;
+    width: 25px;
+    height: 25px;
+    background: green;
+    color: white;
+    padding: 2px;
+    font-weight: bold;
+}

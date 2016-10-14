@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.mtsmda.keygen.desktop"/>
+
+    <bean id="emailProperties" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:spring/email.properties</value>
+                <value>classpath:spring/db.properties</value>
+            </list>
+        </property>
+        <!--<property name="ignoreUnresolvablePlaceholders" value="true"/>-->
+    </bean>
+
+    <!--<jdbc:embedded-database id="dataSource" type="HSQL">
+        <jdbc:script location="classpath:db/sql/create-db.sql"/>
+        <jdbc:script location="classpath:db/sql/insert-data.sql"/>
+    </jdbc:embedded-database>-->
+
+    <!--<jdbc:embedded-database id="dataSource" type="H2">
+        <jdbc:script location="classpath:db/sql/create-db.sql" />
+        <jdbc:script location="classpath:db/sql/insert-data.sql" />
+    </jdbc:embedded-database>-->
+    <!--<jdbc:embedded-database id="dataSource" type="DERBY">
+        <jdbc:script location="classpath:db/sql/create-db.sql" />
+        <jdbc:script location="classpath:db/sql/insert-data.sql" />
+    </jdbc:embedded-database>-->
+    <!--
+        HSQL – jdbc:hsqldb:mem:dataSource
+        H2 – jdbc:h2:mem:dataSource
+        DERBY – jdbc:derby:memory:dataSource-->
+
+    <bean id="appConfiguration" class="com.mtsmda.keygen.desktop.configuration.AppConfiguration">
+        <property name="applicationContextPath" value="http://localhost:8999/keygeneration/"/>
+    </bean>
+
+    <bean id="shaPasswordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+        <constructor-arg name="strength" value="512"></constructor-arg>
+    </bean>
+
+    <bean id="configurationFreemarker" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+        <property name="templateLoaderPath" value="classpath:/freemarker/"/>
+        <property name="defaultEncoding" value="utf-8"/>
+    </bean>
+
+    <bean id="freeMarkerFacade" class="com.mtsmda.keygen.desktop.configuration.FreeMarkerFacade">
+        <property name="configuration" ref="configurationFreemarker"/>
+    </bean>
+
+</beans>

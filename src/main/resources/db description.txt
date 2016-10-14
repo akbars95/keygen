@@ -1,0 +1,26 @@
+users
+    user_id
+    user_email
+    user_created_date_time
+    user_enabled
+    user_username
+    user_password
+
+statuses
+    status_id
+    status_value
+    status_stage
+
+user_requests
+    user_request_id
+    user_id
+    request_date_time
+    request_is_active
+    temp_url
+    temp_password
+    request_status
+
+user_keys
+    user_request_id
+    key
+

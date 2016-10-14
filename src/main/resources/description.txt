@@ -1,0 +1,19 @@
+1)register, need follows: username, password, user email
+2)if registrate is success: generate key: keygen page, need fill username and/or user email and password and
+    click button generate, request status - CREATE_REQUEST
+3)scheduler check every 90 seconds if request is CREATE_REQUEST and is active request and temp url and password is null
+when set temp url and password need change status to GENERATE_TEMP_URL_AND_PASSWORD_REQUEST
+4)other scheduler check every 120 seconds if request status is GENERATE_TEMP_URL_AND_PASSWORD_REQUEST and is active,
+that send email with temp link and password, if send email success change request status to SEND_EMAIL_TO_USER_REQUEST
+5)//third scheduler if request status SEND_EMAIL_TO_USER_REQUEST, then generate key and change CONFIRM_USER_REQUEST
+
+http://localhost:8999/keygeneration/
+
+for example:
+ivanov.ivan@mail.ru
+email message:
+link - http://www.keygen.com/desktop/keygen/{base64code}
+temp password - {[\\w@#$%?!,.]}
+form fill:
+email and temp pass
+answer-025sdhfjhdsjhdjsjsfglfdjg101020162319jlfdhjlgfd

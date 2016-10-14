@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
+    <bean id="standardPasswordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
+
+    <bean id="customAuthenticationProvider" class="com.mtsmda.search.site.security.CustomAuthenticationProvider">
+        <property name="passwordEncoder" ref="standardPasswordEncoder"/>
+        <property name="userDetailsService" ref="userDetailsService"/>
+        <property name="userAttemptRepository" ref="userAttemptRepositoryImpl"/>
+    </bean>
+
+    <bean id="savedRequestAwareAuthenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+        <property name="targetUrlParameter" value="targerUrl"/>
+    </bean>
+
+    <bean id="customJdbcTokenRepositoryImpl" class="com.mtsmda.search.site.security.CustomJdbcTokenRepositoryImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="cookieCsrfTokenRepository" class="org.springframework.security.web.csrf.CookieCsrfTokenRepository"/>
+
+
+</beans>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- SET default mail properties -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${email.host}"/>
+        <property name="port" value="${email.port}"/>
+        <property name="username" value="${email.username}"/>
+        <property name="password" value="${email.password}"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.host">${email.host}</prop>
+                <prop key="mail.smtp.port">${email.port}</prop>
+                <prop key="mail.debug">${email.property.mail.debug}</prop>
+                <prop key="mail.transport.protocol">${email.property.mail.transport.protocol}</prop>
+                <prop key="mail.smtp.auth">${email.property.mail.smtp.auth}</prop>
+                <prop key="mail.smtp.starttls.enable">${email.property.mail.smtp.starttls.enable}</prop>
+                <prop key="mail.mime.charset">${email.property.mail.mime.charset}</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>

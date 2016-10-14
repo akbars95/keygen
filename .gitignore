@@ -1,0 +1,12 @@
+.idea/**
+*.class
+target/**
+*.project
+*.class
+*.idea
+target
+*.iml
+*.log
+*.log.*
+*.iml
+output.html
